@@ -19,8 +19,7 @@
     </header>
 
     <main class="container">
-      <section class="hero hero-with-donut">
-        <canvas id="donut-bg" aria-hidden="true"></canvas>
+      <section class="hero">
         <div>
           <p class="pill">Portfolio minimal</p>
           <h1 class="headline">
@@ -34,7 +33,6 @@
           </p>
           <div class="actions">
             <a class="btn primary" href="projects.html">Voir les projets</a>
-            <a class="btn" href="word2vec.html">Lire Word2Vec</a>
           </div>
         </div>
       </section>
@@ -74,89 +72,5 @@
       <p>Site personnel · sobre et clair.</p>
     </footer>
 
-    <script>
-      // Donut 3D ASCII-like rendu en caractères spéciaux, intégré au fond.
-      (() => {
-        const canvas = document.getElementById('donut-bg');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        const chars = '/!}*#@$';
-        let A = 0;
-        let B = 0;
-        const cols = 72;
-        const rows = 28;
-        const lineHeight = 13;
-
-        function resize() {
-          canvas.width = window.innerWidth;
-          canvas.height = 360;
-        }
-
-        resize();
-        window.addEventListener('resize', resize);
-
-        function render() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-          const buffer = new Array(cols * rows).fill(' ');
-          const zbuf = new Array(cols * rows).fill(0);
-          const R1 = 1;
-          const R2 = 2;
-          const K2 = 5;
-          const K1 = 12;
-
-          for (let theta = 0; theta < Math.PI * 2; theta += 0.07) {
-            const costh = Math.cos(theta);
-            const sinth = Math.sin(theta);
-
-            for (let phi = 0; phi < Math.PI * 2; phi += 0.02) {
-              const cosphi = Math.cos(phi);
-              const sinphi = Math.sin(phi);
-
-              const circleX = R2 + R1 * costh;
-              const circleY = R1 * sinth;
-
-              const x = circleX * (Math.cos(B) * cosphi + Math.sin(A) * Math.sin(B) * sinphi) - circleY * Math.cos(A) * Math.sin(B);
-              const y = circleX * (Math.sin(B) * cosphi - Math.sin(A) * Math.cos(B) * sinphi) + circleY * Math.cos(A) * Math.cos(B);
-              const z = K2 + Math.cos(A) * circleX * sinphi + circleY * Math.sin(A);
-              const ooz = 1 / z;
-
-              const xp = Math.floor(cols / 2 + K1 * ooz * x);
-              const yp = Math.floor(rows / 2 - K1 * ooz * y);
-
-              if (xp >= 0 && xp < cols && yp >= 0 && yp < rows) {
-                const idx = yp * cols + xp;
-                if (ooz > zbuf[idx]) {
-                  zbuf[idx] = ooz;
-                  const L =
-                    cosphi * costh * Math.sin(B) -
-                    Math.cos(A) * costh * sinphi -
-                    Math.sin(A) * sinth +
-                    Math.cos(B) * (Math.cos(A) * sinth - costh * Math.sin(A) * sinphi);
-                  const brightness = Math.max(0, Math.min(1, (L + 1) / 2));
-                  const charIndex = Math.min(chars.length - 1, Math.floor(brightness * (chars.length - 1)));
-                  buffer[idx] = chars[charIndex];
-                }
-              }
-            }
-          }
-
-          ctx.save();
-          ctx.font = '13px "Space Grotesk", monospace';
-          ctx.fillStyle = 'rgba(122, 215, 196, 0.7)';
-          for (let r = 0; r < rows; r++) {
-            const line = buffer.slice(r * cols, (r + 1) * cols).join('');
-            ctx.fillText(line, 16, 18 + r * lineHeight);
-          }
-          ctx.restore();
-
-          A += 0.04;
-          B += 0.03;
-          requestAnimationFrame(render);
-        }
-
-        render();
-      })();
-    </script>
   </body>
 </html>

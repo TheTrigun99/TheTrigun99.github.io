@@ -21,55 +21,64 @@
     <main class="container">
       <section class="hero">
         <div>
-          <p class="pill">Projet Word2Vec</p>
-          <h1 class="headline">Comprendre et construire mes embeddings</h1>
+          <p class="pill">Word2Vec</p>
+          <h1 class="headline">3 parties : Introduction, Traitement, Mod&egrave;le</h1>
           <p class="lead">
-            Un post long pour expliquer ce que je fais avec Word2Vec : du corpus brut aux
-            vecteurs utilisables en recherche de similarit&eacute;.
+            Chaque partie ci-dessous est pr&eacute;sent&eacute;e comme une page
+            s&eacute;par&eacute;e. Navigue via les onglets.
           </p>
           <div class="actions">
-            <a class="btn primary" href="#article">Aller au post</a>
-            <a class="btn" href="#code">Voir le code</a>
+            <a class="btn primary" href="#intro">Introduction</a>
+            <a class="btn" href="#traitement">Traitement</a>
+            <a class="btn" href="#modele">Mod&egrave;le</a>
           </div>
         </div>
       </section>
 
-      <section class="section" id="article">
+      <section class="section" id="intro">
         <div class="card article">
-          <h2>1. Id&eacute;e</h2>
+          <h2>Page 1 · Introduction</h2>
           <p>
-            Word2Vec produit des repr&eacute;sentations denses de mots en se basant sur
-            leur contexte. L'id&eacute;e : capter la proximit&eacute; s&eacute;mantique
-            pour am&eacute;liorer la recherche et les recommandations.
+            Pourquoi Word2Vec ? Capturer la proximit&eacute; s&eacute;mantique en
+            apprenant des vecteurs denses de mots. Utile pour la recherche, les
+            recommandations et la comparaison de documents.
           </p>
-
-          <h2>2. Corpus et nettoyage</h2>
           <p>
-            Je pars d'un corpus homog&egrave;ne (articles, docs internes ou notes). Je
-            nettoie : minuscules, retrait de la ponctuation inutile, suppression des
-            mots trop rares. Le but est de garder uniquement ce qui porte du sens.
+            Deux variantes : CBOW (rapide, pr&eacute;f&eacute;r&eacute;e sur grands
+            corpus) et Skip-gram (plus pr&eacute;cis sur petit corpus, sensible aux mots
+            rares). Je documente ici l'approche que j'utilise sur mes propres donn&eacute;es.
           </p>
+        </div>
+      </section>
 
-          <h2>3. Entra&icirc;nement</h2>
+      <section class="section" id="traitement">
+        <div class="card article">
+          <h2>Page 2 · Traitement</h2>
           <p>
-            Je choisis CBOW (rapide) ou Skip-gram (plus pr&eacute;cis sur petit corpus).
-            Param&egrave;tres de base : <code>vector_size=200</code>,
-            <code>window=5</code>, <code>min_count=3</code>. J'augmente
-            <code>epochs</code> si le corpus est modeste.
+            Corpus homog&egrave;ne : articles, docs internes ou notes. Nettoyage de base :
+            passage en minuscules, retrait de ponctuation non utile, suppression des mots
+            trop rares (<code>min_count</code>).
           </p>
-
-          <h2>4. &Eacute;valuation simple</h2>
           <p>
-            Je teste quelques analogies et paires de mots proches/&eacute;loign&eacute;s.
-            Je v&eacute;rifie les mots hors vocabulaire (OOV) pour ajuster
-            <code>min_count</code>.
+            Tokenisation simple avec <code>gensim.utils.simple_preprocess</code>. Pense &agrave;
+            filtrer les lignes vides et &agrave; adapter la regex si le corpus contient des
+            caract&egrave;res sp&eacute;cifiques.
           </p>
+        </div>
+      </section>
 
-          <h2>5. Export</h2>
+      <section class="section" id="modele">
+        <div class="card article">
+          <h2>Page 3 · Mod&egrave;le</h2>
           <p>
-            Je sauvegarde le mod&egrave;le (<code>.model</code>) et les vecteurs
-            (<code>.vec</code>) pour les r&eacute;utiliser dans un service ou un
-            notebook.
+            Param&egrave;tres de d&eacute;part : <code>vector_size=200</code>,
+            <code>window=5</code>, <code>min_count=3</code>, <code>sg=1</code> pour
+            Skip-gram, <code>epochs=12</code>. Ajuste selon la taille du corpus.
+          </p>
+          <p>
+            &Eacute;valuer rapidement avec quelques analogies ou similarit&eacute;s
+            connues, surveiller les OOV (mots absents du vocabulaire). Exporter
+            <code>.model</code> et <code>.vec</code> pour r&eacute;utilisation.
           </p>
         </div>
       </section>
