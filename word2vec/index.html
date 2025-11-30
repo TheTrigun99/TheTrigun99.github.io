@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Word2Vec SGNS | Damien Aupretre</title>
     <link rel="stylesheet" href="../style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   </head>
   <body>
     <header>
@@ -22,18 +23,20 @@
         <div>
           <p class="pill">Word2Vec SGNS</p>
           <h1 class="headline">Plan du projet</h1>
-          <p class="lead">Acc&egrave;s aux sections : introduction, th&eacute;orie, traitement, mod&egrave;le.</p>
+          <p class="lead">Choisis directement la section que tu veux &eacute;diter en Markdown.</p>
           <div class="actions">
-            <a class="btn primary" href="introduction/">Introduction</a>
-            <a class="btn" href="theorie/">Mod&egrave;le th&eacute;orique</a>
-            <a class="btn" href="traitement/">Traitement</a>
-            <a class="btn" href="modele/">Mod&egrave;le</a>
+            <a class="btn primary" href="/word2vec/introduction/">Introduction</a>
+            <a class="btn" href="/word2vec/theorie/">Mod&egrave;le th&eacute;orique</a>
+            <a class="btn" href="/word2vec/traitement/">Traitement</a>
+            <a class="btn" href="/word2vec/modele/">Mod&egrave;le</a>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="card">
+      <section class="md-layout">
+        <div class="md-body" id="md-content">Chargement...</div>
+        <div class="side-card">
+          <h3>Sommaire</h3>
           <ul class="list">
             <li><a href="/word2vec/introduction/">Introduction</a></li>
             <li><a href="/word2vec/theorie/">Mod&egrave;le th&eacute;orique</a></li>
@@ -47,5 +50,20 @@
     <footer>
       <p>Word2Vec SGNS.</p>
     </footer>
+
+    <script>
+      async function loadMarkdown(path, targetId) {
+        const el = document.getElementById(targetId);
+        try {
+          const res = await fetch(path);
+          if (!res.ok) throw new Error('Markdown introuvable');
+          const text = await res.text();
+          el.innerHTML = marked.parse(text);
+        } catch (e) {
+          el.innerHTML = '<p class="muted">Ajoute ton contenu Markdown dans word2vec/content.md</p>';
+        }
+      }
+      loadMarkdown('content.md', 'md-content');
+    </script>
   </body>
 </html>

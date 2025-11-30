@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Introduction | Word2Vec SGNS</title>
     <link rel="stylesheet" href="../../style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   </head>
   <body>
     <header>
@@ -22,12 +23,13 @@
         <div>
           <p class="pill">Word2Vec SGNS</p>
           <h1 class="headline">Introduction</h1>
-          <p class="lead">Texte d'introduction &agrave; ajouter.</p>
+          <p class="lead">R&eacute;dige ce chapitre en Markdown.</p>
         </div>
       </section>
 
-      <section class="section">
-        <div class="card">
+      <section class="md-layout">
+        <div class="md-body" id="md-content">Chargement...</div>
+        <div class="side-card">
           <h3>Sommaire</h3>
           <ul class="list">
             <li><a href="/word2vec/introduction/">Introduction</a></li>
@@ -42,5 +44,20 @@
     <footer>
       <p>Word2Vec SGNS.</p>
     </footer>
+
+    <script>
+      async function loadMarkdown(path, targetId) {
+        const el = document.getElementById(targetId);
+        try {
+          const res = await fetch(path);
+          if (!res.ok) throw new Error('Markdown introuvable');
+          const text = await res.text();
+          el.innerHTML = marked.parse(text);
+        } catch (e) {
+          el.innerHTML = '<p class="muted">Ajoute ton contenu Markdown dans introduction/content.md</p>';
+        }
+      }
+      loadMarkdown('content.md', 'md-content');
+    </script>
   </body>
 </html>
