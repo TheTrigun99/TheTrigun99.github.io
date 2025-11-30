@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tutoriel Word2Vec | TheTrigun99</title>
+    <title>Word2Vec | Damien Aupretre</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
       <div class="nav">
-        <a class="brand" href="index.html">TheTrigun99</a>
+        <a class="brand" href="index.html">Damien Aupretre</a>
         <div class="nav-links">
           <a href="index.html">Accueil</a>
           <a href="projects.html">Projets</a>
-          <a class="active" href="word2vec.html">Tutoriel Word2Vec</a>
+          <a class="active" href="word2vec.html">Word2Vec</a>
         </div>
       </div>
     </header>
@@ -21,102 +21,67 @@
     <main class="container">
       <section class="hero">
         <div>
-          <span class="badge">Guide détaillé</span>
-          <h1 class="headline">Word2Vec expliqué en pratique</h1>
+          <p class="pill">Projet Word2Vec</p>
+          <h1 class="headline">Comprendre et construire mes embeddings</h1>
           <p class="lead">
-            Comment passer d'un corpus brut à des vecteurs de mots exploitables pour la
-            recherche de similarité ou l'analyse de proximité sémantique.
+            Un post long pour expliquer ce que je fais avec Word2Vec : du corpus brut aux
+            vecteurs utilisables en recherche de similarit&eacute;.
           </p>
           <div class="actions">
-            <a class="btn primary" href="#recette">Recette rapide</a>
+            <a class="btn primary" href="#article">Aller au post</a>
             <a class="btn" href="#code">Voir le code</a>
           </div>
         </div>
-        <div class="hero-visual">
-          <h3>Objectifs du tuto</h3>
-          <ul class="list">
-            <li>Comprendre CBOW vs Skip-gram</li>
-            <li>Nettoyer et tokeniser un corpus</li>
-            <li>Former et sauvegarder un modèle</li>
-            <li>Tester la similarité entre mots</li>
-          </ul>
-        </div>
       </section>
 
-      <section class="section" id="recette">
-        <div class="panel">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px">
-            <h2 class="section-title">Recette rapide</h2>
-            <span class="pill">Checklist</span>
-          </div>
-          <div class="step-grid">
-            <div class="step">
-              <strong>1. Corpus</strong>
-              <p class="muted">Rassembler des textes homogènes, retirer le bruit.</p>
-            </div>
-            <div class="step">
-              <strong>2. Nettoyage</strong>
-              <p class="muted">Lowercase, retirer les stopwords, garder les mots utiles.</p>
-            </div>
-            <div class="step">
-              <strong>3. Entraînement</strong>
-              <p class="muted">CBOW (rapide) ou Skip-gram (précis) selon la taille du corpus.</p>
-            </div>
-            <div class="step">
-              <strong>4. Évaluation</strong>
-              <p class="muted">Tester la similarité, vérifier les mots hors vocabulaire.</p>
-            </div>
-            <div class="step">
-              <strong>5. Sauvegarde</strong>
-              <p class="muted">Exporter le modèle et les vecteurs pour réutilisation.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section class="section" id="article">
+        <div class="card article">
+          <h2>1. Id&eacute;e</h2>
+          <p>
+            Word2Vec produit des repr&eacute;sentations denses de mots en se basant sur
+            leur contexte. L'id&eacute;e : capter la proximit&eacute; s&eacute;mantique
+            pour am&eacute;liorer la recherche et les recommandations.
+          </p>
 
-      <section class="section">
-        <div class="grid">
-          <div class="card">
-            <h3>Pourquoi Word2Vec ?</h3>
-            <p class="muted">
-              Chaque mot est représenté par un vecteur dense qui capture le contexte
-              d'apparition. On peut alors mesurer la proximité sémantique avec des
-              distances de cosine, alimenter un moteur de recherche ou un système de
-              recommandations textuelles.
-            </p>
-          </div>
-          <div class="card">
-            <h3>Choisir le mode</h3>
-            <p class="muted">
-              CBOW prédit un mot à partir du contexte : plus rapide, efficace sur grands
-              corpus. Skip-gram prédit le contexte à partir d'un mot : plus fin sur
-              petits corpus, capte mieux les mots rares.
-            </p>
-          </div>
-          <div class="card">
-            <h3>Paramètres clés</h3>
-            <ul class="list">
-              <li><code>vector_size</code> : 100-300 pour commencer</li>
-              <li><code>window</code> : 5-8 pour du texte généraliste</li>
-              <li><code>min_count</code> : filtrer les mots trop rares</li>
-              <li><code>sg</code> : 0 = CBOW, 1 = Skip-gram</li>
-            </ul>
-          </div>
+          <h2>2. Corpus et nettoyage</h2>
+          <p>
+            Je pars d'un corpus homog&egrave;ne (articles, docs internes ou notes). Je
+            nettoie : minuscules, retrait de la ponctuation inutile, suppression des
+            mots trop rares. Le but est de garder uniquement ce qui porte du sens.
+          </p>
+
+          <h2>3. Entra&icirc;nement</h2>
+          <p>
+            Je choisis CBOW (rapide) ou Skip-gram (plus pr&eacute;cis sur petit corpus).
+            Param&egrave;tres de base : <code>vector_size=200</code>,
+            <code>window=5</code>, <code>min_count=3</code>. J'augmente
+            <code>epochs</code> si le corpus est modeste.
+          </p>
+
+          <h2>4. &Eacute;valuation simple</h2>
+          <p>
+            Je teste quelques analogies et paires de mots proches/&eacute;loign&eacute;s.
+            Je v&eacute;rifie les mots hors vocabulaire (OOV) pour ajuster
+            <code>min_count</code>.
+          </p>
+
+          <h2>5. Export</h2>
+          <p>
+            Je sauvegarde le mod&egrave;le (<code>.model</code>) et les vecteurs
+            (<code>.vec</code>) pour les r&eacute;utiliser dans un service ou un
+            notebook.
+          </p>
         </div>
       </section>
 
       <section class="section" id="code">
-        <div class="panel">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px">
-            <h2 class="section-title">Exemple de code (Python + Gensim)</h2>
-            <span class="pill">Copier / coller</span>
-          </div>
-          <pre><code>import re
+        <div class="card">
+          <h2 style="margin: 0 0 8px 0">Exemple rapide (Python + Gensim)</h2>
+<pre><code>import re
 from pathlib import Path
 from gensim.models import Word2Vec
 from gensim.utils import simple_preprocess
 
-# 1) Charger et préparer les données
 raw_text = Path("corpus.txt").read_text(encoding="utf-8")
 
 def clean_sentence(sent):
@@ -124,29 +89,31 @@ def clean_sentence(sent):
     sent = re.sub(r"[^a-zàâçéèêëîïôûùüÿñæœ\\s]", " ", sent)
     return sent
 
-sentences = [simple_preprocess(clean_sentence(s)) for s in raw_text.split("\\n") if s.strip()]
+sentences = [
+    simple_preprocess(clean_sentence(s))
+    for s in raw_text.split("\\n")
+    if s.strip()
+]
 
-# 2) Entraîner le modèle
 model = Word2Vec(
     sentences=sentences,
     vector_size=200,
     window=5,
     min_count=3,
     workers=4,
-    sg=1,  # 1 = Skip-gram, 0 = CBOW
+    sg=1,   # 1 = Skip-gram, 0 = CBOW
     epochs=12,
 )
 
-# 3) Inspecter quelques résultats
 print(model.wv.most_similar("nlp", topn=5))
 
-# 4) Sauvegarder
 model.save("word2vec.model")
 model.wv.save_word2vec_format("word2vec.vec")
 </code></pre>
           <p class="muted">
-            Pense à adapter la regex pour les caractères spécifiques à ta langue et à
-            ajuster <code>min_count</code> si ton corpus est petit.
+            Adapte la regex &agrave; ta langue, ajuste <code>min_count</code> si le
+            corpus est petit. Tout ce bloc est pr&ecirc;t &agrave; remplacer par tes
+            propres notes.
           </p>
         </div>
       </section>
@@ -154,90 +121,26 @@ model.wv.save_word2vec_format("word2vec.vec")
       <section class="section">
         <div class="grid">
           <div class="card">
-            <h3>Évaluer rapidement</h3>
+            <h3>Ce qui reste &agrave; &eacute;crire</h3>
             <ul class="list">
-              <li>Comparer des paires de mots proches / éloignés</li>
-              <li>Tester l'analogie : roi - homme + femme ≈ reine</li>
-              <li>Repérer les mots hors vocabulaire (OOV)</li>
+              <li>D&eacute;tails sur l'&eacute;chantillonnage du corpus</li>
+              <li>Quelques graphiques (t-SNE/UMAP) pour visualiser</li>
+              <li>Comment je branche les vecteurs dans un moteur de recherche</li>
             </ul>
           </div>
           <div class="card">
-            <h3>Astuces pratiques</h3>
+            <h3>Raccourcis</h3>
             <ul class="list">
-              <li>Tokenisation cohérente : tout en minuscule ou pas</li>
-              <li>Retirer les chiffres si non pertinents</li>
-              <li>Essayer plusieurs tailles de fenêtre (3, 5, 8)</li>
-              <li>Limiter les phrases trop courtes : elles apprennent peu</li>
+              <li><a href="projects.html">Retour projets</a></li>
+              <li><a href="index.html">Accueil</a></li>
             </ul>
-          </div>
-          <div class="card">
-            <h3>Aller plus loin</h3>
-            <p class="muted">
-              Initialiser Word2Vec avec des embeddings pré-entraînés, comparer avec
-              FastText ou Glove, ou combiner avec un modèle de recherche vectorielle
-              (FAISS, Milvus).
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="panel">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px">
-            <h2 class="section-title">Plan du projet Word2Vec</h2>
-            <span class="pill">En cours</span>
-          </div>
-          <div class="timeline">
-            <div class="timeline-item">
-              <h4>Préparation du corpus</h4>
-              <p class="muted">Nettoyage, normalisation des caractères, découpe en phrases.</p>
-            </div>
-            <div class="timeline-item">
-              <h4>Entraînement</h4>
-              <p class="muted">Tests CBOW/Skip-gram, tuning du vocabulaire et du window size.</p>
-            </div>
-            <div class="timeline-item">
-              <h4>Évaluation</h4>
-              <p class="muted">Jeu de paires de similarité + vérification manuelle.</p>
-            </div>
-            <div class="timeline-item">
-              <h4>Packaging</h4>
-              <p class="muted">Sauvegarde, scripts de chargement, et intégration dans un mini service.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="grid">
-          <div class="card">
-            <h3>Ressources utiles</h3>
-            <ul class="list">
-              <li>Doc Gensim : Word2Vec, KeyedVectors</li>
-              <li>Corpus open : Wikipedia dump, OSCAR, Common Crawl</li>
-              <li>Faiss pour la recherche vectorielle</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3>Prochaines améliorations</h3>
-            <p class="muted">
-              Ajouter un script CLI complet (train + eval + export) et quelques visuels
-              de projection (t-SNE ou UMAP) pour explorer l'espace des vecteurs.
-            </p>
-          </div>
-          <div class="card">
-            <h3>Liens rapides</h3>
-            <div class="actions" style="margin-top: 6px">
-              <a class="btn" href="index.html">Accueil</a>
-              <a class="btn" href="projects.html">Mes projets</a>
-            </div>
           </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Tutoriel Word2Vec · Sobre, orienté pratique.</p>
+      <p>Post Word2Vec · clair et sans surplus.</p>
     </footer>
   </body>
 </html>

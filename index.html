@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Accueil | TheTrigun99</title>
+    <title>Accueil | Damien Aupretre</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
       <div class="nav">
-        <a class="brand" href="index.html">TheTrigun99</a>
+        <a class="brand" href="index.html">Damien Aupretre</a>
         <div class="nav-links">
           <a class="active" href="index.html">Accueil</a>
           <a href="projects.html">Projets</a>
-          <a href="word2vec.html">Tutoriel Word2Vec</a>
+          <a href="word2vec.html">Word2Vec</a>
         </div>
       </div>
     </header>
@@ -21,154 +21,117 @@
     <main class="container">
       <section class="hero">
         <div>
-          <span class="badge">Bienvenue sur mon espace GitHub Pages</span>
+          <p class="pill">Portfolio minimal</p>
           <h1 class="headline">
-            Salut, je suis <span class="highlight">TheTrigun99</span>.
-            <br />Je construis des choses utiles et élégantes.
+            Damien Aupretre<br />
+            &Eacute;tudiant &agrave; CentraleSup&eacute;lec
           </h1>
           <p class="lead">
-            Ce site rassemble mes projets, mes notes techniques et un tutoriel détaillé
-            sur Word2Vec. L'objectif : partager simplement ce que je fais, pourquoi je le
-            fais, et comment tu peux reproduire mes expériences.
+            J'aime les maths, l'informatique et les projets propres. Ici : une page
+            d'accueil simple, une page projets, et un post d&eacute;taill&eacute; sur
+            Word2Vec.
           </p>
           <div class="actions">
-            <a class="btn primary" href="projects.html">Découvrir mes projets</a>
-            <a class="btn" href="word2vec.html">Lire le tuto Word2Vec</a>
+            <a class="btn primary" href="projects.html">Voir les projets</a>
+            <a class="btn" href="word2vec.html">Lire Word2Vec</a>
           </div>
         </div>
-        <div class="hero-visual">
-          <div class="panel">
-            <p class="muted">Focus du moment</p>
-            <div class="progress" style="--value: 70%">
-              <span></span>
-            </div>
-            <div class="tags" style="margin-top: 12px">
-              <span class="tag">Data / NLP</span>
-              <span class="tag">Python</span>
-              <span class="tag">Front minimaliste</span>
-            </div>
-            <div class="section" style="margin-top: 14px">
-              <p class="muted">Ce site est un point d'entrée rapide vers mes travaux.</p>
-              <p class="quote">Sobre, clair, et utile.</p>
-            </div>
-          </div>
+        <div class="donut-frame">
+          <canvas id="donut" width="260" height="260" aria-label="Donut 3D qui tourne"></canvas>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <h2 style="margin: 0">Ce que tu trouveras ici</h2>
+          <ul class="list">
+            <li>Une page projets avec un r&eacute;sum&eacute; rapide.</li>
+            <li>Un long post Word2Vec que je remplis au fur et &agrave; mesure.</li>
+            <li>Un style sombre, sans fioritures.</li>
+          </ul>
         </div>
       </section>
 
       <section class="section">
         <div class="grid">
           <div class="card">
-            <span class="label">Ce que je fais</span>
-            <h3>Data, NLP et prototypage</h3>
+            <h3>Rep&egrave;res rapides</h3>
             <p class="muted">
-              Construction de pipelines de données, expérimentation NLP, rédaction de
-              tutoriels et partage d'exemples reproductibles.
+              Maths + info, go-to stack : Python, notebooks, un peu de front pour
+              pr&eacute;senter les r&eacute;sultats.
             </p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">Word2Vec</span>
-              <span class="tag">Exploration</span>
-            </div>
-          </div>
-          <div class="card">
-            <span class="label">Méthode</span>
-            <h3>Pragmatisme et clarté</h3>
-            <p class="muted">
-              Une approche centrée sur l'essentiel : moins de bruit, plus de résultats
-              mesurables et documentés.
-            </p>
-            <div class="tags">
-              <span class="tag">Simplicité</span>
-              <span class="tag">Documentation</span>
-              <span class="tag">Tests</span>
-            </div>
-          </div>
-          <div class="card">
-            <span class="label">A partager</span>
-            <h3>Guides & retours d'expérience</h3>
-            <p class="muted">
-              Notes condensées, plans d'expériences et astuces pour reproduire mes
-              résultats sur tes propres données.
-            </p>
-            <div class="tags">
-              <span class="tag">Guides</span>
-              <span class="tag">Reproductibilité</span>
-              <span class="tag">Open</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="panel">
-          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
-            <h2 class="section-title">Aperçu rapide</h2>
-            <span class="pill">Vue d'ensemble</span>
-          </div>
-          <div class="timeline">
-            <div class="timeline-item">
-              <h4>Projets en cours</h4>
-              <p class="muted">
-                Exploration de modèles de représentation de texte, optimisation du front
-                pour ce site et préparation de démos live.
-              </p>
-            </div>
-            <div class="timeline-item">
-              <h4>Tutoriels</h4>
-              <p class="muted">
-                Un guide complet sur Word2Vec, de la théorie au code, avec des snippets
-                prêts à l'emploi.
-              </p>
-            </div>
-            <div class="timeline-item">
-              <h4>Partage</h4>
-              <p class="muted">
-                Ce site centralise mes liens, mes dépôts GitHub et mes notes techniques.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="grid">
-          <div class="card">
-            <h3>Stack rapide</h3>
-            <p class="muted">Technos que j'utilise le plus souvent.</p>
-            <div class="tags">
-              <span class="tag">Python</span>
-              <span class="tag">Pandas</span>
-              <span class="tag">Gensim</span>
-              <span class="tag">VS Code</span>
-              <span class="tag">GitHub Pages</span>
-            </div>
-          </div>
-          <div class="card">
-            <h3>Objectifs</h3>
-            <p class="muted">Livrer des projets clairs, avec des tutoriels concis.</p>
-            <ul class="list">
-              <li>Documenter chaque essai important</li>
-              <li>Partager des snippets prêts à copier</li>
-              <li>Conserver un design sobre et cohérent</li>
-            </ul>
           </div>
           <div class="card">
             <h3>Contact</h3>
             <p class="muted">
-              Ajoute ici tes liens (GitHub, LinkedIn, email). Pour l'instant, tu peux
-              m'écrire via GitHub.
+              Ajoute ici tes liens (GitHub, LinkedIn, email) si besoin. Le site reste
+              volontairement minimal.
             </p>
-            <div class="actions" style="margin-top: 8px">
-              <a class="btn" href="projects.html">Voir mes projets</a>
-              <a class="btn" href="word2vec.html">Lire Word2Vec</a>
-            </div>
           </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Construit avec sobriété. Mise à jour continue.</p>
+      <p>Site personnel · sobre et clair.</p>
     </footer>
+
+    <script>
+      // Donut 3D léger inspiré d'un rendu torus ASCII, version canvas.
+      const canvas = document.getElementById('donut');
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      let A = 0;
+      let B = 0;
+
+      function render() {
+        ctx.fillStyle = '#0c1118';
+        ctx.fillRect(0, 0, w, h);
+
+        const R1 = 1; // rayon du tube
+        const R2 = 2; // rayon principal
+        const K2 = 5;
+        const K1 = 90;
+
+        for (let theta = 0; theta < Math.PI * 2; theta += 0.07) {
+          const costh = Math.cos(theta);
+          const sinth = Math.sin(theta);
+
+          for (let phi = 0; phi < Math.PI * 2; phi += 0.02) {
+            const cosphi = Math.cos(phi);
+            const sinphi = Math.sin(phi);
+
+            const circleX = R2 + R1 * costh;
+            const circleY = R1 * sinth;
+
+            const x = circleX * (Math.cos(B) * cosphi + Math.sin(A) * Math.sin(B) * sinphi) - circleY * Math.cos(A) * Math.sin(B);
+            const y = circleX * (Math.sin(B) * cosphi - Math.sin(A) * Math.cos(B) * sinphi) + circleY * Math.cos(A) * Math.cos(B);
+            const z = K2 + Math.cos(A) * circleX * sinphi + circleY * Math.sin(A);
+            const ooz = 1 / z;
+
+            const xp = w / 2 + K1 * ooz * x;
+            const yp = h / 2 - K1 * ooz * y;
+
+            const L =
+              cosphi * costh * Math.sin(B) -
+              Math.cos(A) * costh * sinphi -
+              Math.sin(A) * sinth +
+              Math.cos(B) * (Math.cos(A) * sinth - costh * Math.sin(A) * sinphi);
+            const brightness = Math.max(0, Math.min(1, (L + 1) / 2));
+            const shade = Math.floor(180 + 60 * brightness);
+
+            ctx.fillStyle = `rgb(${shade}, ${Math.floor(shade * 0.95)}, ${Math.floor(200 * brightness)})`;
+            ctx.fillRect(xp, yp, 2, 2);
+          }
+        }
+
+        A += 0.03;
+        B += 0.02;
+        requestAnimationFrame(render);
+      }
+
+      render();
+    </script>
   </body>
 </html>
