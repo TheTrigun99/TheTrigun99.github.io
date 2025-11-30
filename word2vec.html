@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Word2Vec | Damien Aupretre</title>
+    <title>Word2Vec SGNS | Damien Aupretre</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -12,8 +12,8 @@
         <a class="brand" href="index.html">Damien Aupretre</a>
         <div class="nav-links">
           <a href="index.html">Accueil</a>
-          <a href="projects.html">Projets</a>
-          <a class="active" href="word2vec.html">Word2Vec</a>
+          <a href="projects.html">Projet</a>
+          <a class="active" href="word2vec.html">Word2Vec SGNS</a>
         </div>
       </div>
     </header>
@@ -21,178 +21,15 @@
     <main class="container">
       <section class="hero">
         <div>
-          <p class="pill">Word2Vec</p>
-          <h1 class="headline">Word2Vec, simplement et sans surplus</h1>
-          <p class="lead">
-            Comprendre l'intuition, pr&eacute;parer un corpus, entra&icirc;ner un mod&egrave;le
-            et v&eacute;rifier qu'il produit des vecteurs utiles.
-          </p>
-          <div class="actions">
-            <a class="btn primary" href="#intro">Introduction</a>
-            <a class="btn" href="#code">Aller au code</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="card">
-          <h2 style="margin: 0 0 8px 0">Sommaire</h2>
-          <ul class="list">
-            <li><a href="#intro">Introduction</a></li>
-            <li><a href="#intuition">Intuition : CBOW vs Skip-gram</a></li>
-            <li><a href="#corpus">Traitement du corpus</a></li>
-            <li><a href="#entrainement">Entra&icirc;nement & hyperparam&egrave;tres</a></li>
-            <li><a href="#evaluation">Evaluation rapide</a></li>
-            <li><a href="#usage">Usage pratique</a></li>
-            <li><a href="#code">Bloc code Python</a></li>
-            <li><a href="#ressources">Ressources</a></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section" id="intro">
-        <div class="card article">
-          <h2>Introduction</h2>
-          <p>
-            Word2Vec apprend une repr&eacute;sentation dense de chaque mot en observant son
-            contexte. Des mots qui apparaissent dans des contextes similaires obtiennent
-            des vecteurs proches. Ces vecteurs servent ensuite &agrave; mesurer des
-            proximit&eacute;s, faire des analogies, ou initialiser un mod&egrave;le de
-            recherche s&eacute;mantique.
-          </p>
-        </div>
-      </section>
-
-      <section class="section" id="intuition">
-        <div class="card article">
-          <h2>Intuition : CBOW vs Skip-gram</h2>
-          <p>
-            Deux variantes sym&eacute;triques :
-          </p>
-          <ul>
-            <li><strong>CBOW</strong> (Continuous Bag of Words) pr&eacute;dit un mot &agrave; partir du contexte. Plus rapide, efficace sur grands corpus.</li>
-            <li><strong>Skip-gram</strong> pr&eacute;dit le contexte &agrave; partir d'un mot. Plus pr&eacute;cis sur petits corpus et mots rares.</li>
-          </ul>
-          <p>
-            Je pars souvent sur Skip-gram (<code>sg=1</code>) avec une fen&ecirc;tre
-            modeste (5 &agrave; 8) pour capter les proximit&eacute;s locales.
-          </p>
-        </div>
-      </section>
-
-      <section class="section" id="corpus">
-        <div class="card article">
-          <h2>Traitement du corpus</h2>
-          <p>
-            Objectif : un texte homog&egrave;ne et propre avant l'apprentissage.
-          </p>
-          <ul>
-            <li>Minuscules, retrait de ponctuation inutile, suppression des doublons et lignes vides.</li>
-            <li><code>min_count</code> pour filtrer les mots trop rares.</li>
-            <li>Tokenisation simple : <code>gensim.utils.simple_preprocess</code> suffit dans beaucoup de cas.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section" id="entrainement">
-        <div class="card article">
-          <h2>Entra&icirc;nement & hyperparam&egrave;tres</h2>
-          <p>Configuration de base :</p>
-          <ul>
-            <li><code>vector_size</code> : 100 &agrave; 300 (200 par d&eacute;faut ici).</li>
-            <li><code>window</code> : 5 pour du texte g&eacute;n&eacute;raliste.</li>
-            <li><code>min_count</code> : 3 pour filtrer le tr&egrave;s rare.</li>
-            <li><code>sg</code> : 1 (Skip-gram) ou 0 (CBOW).</li>
-            <li><code>epochs</code> : monte si le corpus est modeste.</li>
-          </ul>
-          <p>
-            Surveille le temps d'entra&icirc;nement (nombre de threads via
-            <code>workers</code>) et la stabilit&eacute; du vocabulaire (pas trop de mots
-            &eacute;limin&eacute;s).
-          </p>
-        </div>
-      </section>
-
-      <section class="section" id="evaluation">
-        <div class="card article">
-          <h2>Evaluation rapide</h2>
-          <ul>
-            <li><strong>Similarit&eacute;s</strong> : mots proches/&eacute;loign&eacute;s pour voir si les contextes sont coh&eacute;rents.</li>
-            <li><strong>Analogies</strong> : <code>roi - homme + femme ≈ reine</code> ou des exemples pertinents &agrave; ton domaine.</li>
-            <li><strong>OOV</strong> : mots hors vocabulaire. Ajuste <code>min_count</code> ou enrichis le corpus.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section" id="usage">
-        <div class="card article">
-          <h2>Usage pratique</h2>
-          <ul>
-            <li>Recherche de similarit&eacute; : vecteurs moyens de documents, cosine.</li>
-            <li>Initialisation d'un moteur vectoriel (FAISS, etc.).</li>
-            <li>Features pour des mod&egrave;les classiques (clustering, classification).</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section" id="code">
-        <div class="card">
-          <h2 style="margin: 0 0 8px 0">Bloc code (Python + Gensim)</h2>
-<pre><code>import re
-from pathlib import Path
-from gensim.models import Word2Vec
-from gensim.utils import simple_preprocess
-
-raw_text = Path("corpus.txt").read_text(encoding="utf-8")
-
-def clean_sentence(sent):
-    sent = sent.lower()
-    sent = re.sub(r"[^a-zàâçéèêëîïôûùüÿñæœ\\s]", " ", sent)
-    return sent
-
-sentences = [
-    simple_preprocess(clean_sentence(s))
-    for s in raw_text.split("\\n")
-    if s.strip()
-]
-
-model = Word2Vec(
-    sentences=sentences,
-    vector_size=200,
-    window=5,
-    min_count=3,
-    workers=4,
-    sg=1,   # Skip-gram (0 pour CBOW)
-    epochs=12,
-)
-
-print(model.wv.most_similar("nlp", topn=5))
-
-model.save("word2vec.model")
-model.wv.save_word2vec_format("word2vec.vec")
-</code></pre>
-          <p class="muted">
-            Adapte la regex &agrave; ton alphabet, ajuste <code>min_count</code> si le
-            corpus est petit, et modifie <code>window</code> selon la granularit&eacute;
-            voulue.
-          </p>
-        </div>
-      </section>
-
-      <section class="section" id="ressources">
-        <div class="card article">
-          <h2>Ressources</h2>
-          <ul>
-            <li>Doc Gensim : Word2Vec, KeyedVectors.</li>
-            <li>Corpora ouverts : Wikipedia dump, OSCAR, Common Crawl (filtr&eacute;s).</li>
-            <li>Moteurs vectoriels : FAISS, Milvus, ou un simple Annoy pour commencer.</li>
-          </ul>
+          <p class="pill">Word2Vec SGNS</p>
+          <h1 class="headline">Page du projet</h1>
+          <p class="lead">Contenu &agrave; ajouter.</p>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Word2Vec · sobre et clair.</p>
+      <p>Word2Vec SGNS.</p>
     </footer>
   </body>
 </html>
