@@ -87,6 +87,26 @@ header {
   padding: 26px 0 12px;
 }
 
+.hero-with-donut {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-with-donut > canvas {
+  position: absolute;
+  inset: -40px 0 0 0;
+  width: 100%;
+  height: 360px;
+  opacity: 0.6;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.hero-with-donut > *:not(canvas) {
+  position: relative;
+  z-index: 1;
+}
+
 .headline {
   font-size: clamp(2rem, 4vw, 2.6rem);
   margin: 10px 0 12px;
@@ -189,13 +209,7 @@ footer {
 }
 
 .donut-frame {
-  background: #0f1622;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: none;
 }
 
 canvas {
