@@ -22,70 +22,122 @@
       <section class="hero">
         <div>
           <p class="pill">Word2Vec</p>
-          <h1 class="headline">3 parties : Introduction, Traitement, Mod&egrave;le</h1>
+          <h1 class="headline">Word2Vec, simplement et sans surplus</h1>
           <p class="lead">
-            Chaque partie ci-dessous est pr&eacute;sent&eacute;e comme une page
-            s&eacute;par&eacute;e. Navigue via les onglets.
+            Comprendre l'intuition, pr&eacute;parer un corpus, entra&icirc;ner un mod&egrave;le
+            et v&eacute;rifier qu'il produit des vecteurs utiles.
           </p>
           <div class="actions">
             <a class="btn primary" href="#intro">Introduction</a>
-            <a class="btn" href="#traitement">Traitement</a>
-            <a class="btn" href="#modele">Mod&egrave;le</a>
+            <a class="btn" href="#code">Aller au code</a>
           </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="card">
+          <h2 style="margin: 0 0 8px 0">Sommaire</h2>
+          <ul class="list">
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#intuition">Intuition : CBOW vs Skip-gram</a></li>
+            <li><a href="#corpus">Traitement du corpus</a></li>
+            <li><a href="#entrainement">Entra&icirc;nement & hyperparam&egrave;tres</a></li>
+            <li><a href="#evaluation">Evaluation rapide</a></li>
+            <li><a href="#usage">Usage pratique</a></li>
+            <li><a href="#code">Bloc code Python</a></li>
+            <li><a href="#ressources">Ressources</a></li>
+          </ul>
         </div>
       </section>
 
       <section class="section" id="intro">
         <div class="card article">
-          <h2>Page 1 · Introduction</h2>
+          <h2>Introduction</h2>
           <p>
-            Pourquoi Word2Vec ? Capturer la proximit&eacute; s&eacute;mantique en
-            apprenant des vecteurs denses de mots. Utile pour la recherche, les
-            recommandations et la comparaison de documents.
-          </p>
-          <p>
-            Deux variantes : CBOW (rapide, pr&eacute;f&eacute;r&eacute;e sur grands
-            corpus) et Skip-gram (plus pr&eacute;cis sur petit corpus, sensible aux mots
-            rares). Je documente ici l'approche que j'utilise sur mes propres donn&eacute;es.
+            Word2Vec apprend une repr&eacute;sentation dense de chaque mot en observant son
+            contexte. Des mots qui apparaissent dans des contextes similaires obtiennent
+            des vecteurs proches. Ces vecteurs servent ensuite &agrave; mesurer des
+            proximit&eacute;s, faire des analogies, ou initialiser un mod&egrave;le de
+            recherche s&eacute;mantique.
           </p>
         </div>
       </section>
 
-      <section class="section" id="traitement">
+      <section class="section" id="intuition">
         <div class="card article">
-          <h2>Page 2 · Traitement</h2>
+          <h2>Intuition : CBOW vs Skip-gram</h2>
           <p>
-            Corpus homog&egrave;ne : articles, docs internes ou notes. Nettoyage de base :
-            passage en minuscules, retrait de ponctuation non utile, suppression des mots
-            trop rares (<code>min_count</code>).
+            Deux variantes sym&eacute;triques :
           </p>
+          <ul>
+            <li><strong>CBOW</strong> (Continuous Bag of Words) pr&eacute;dit un mot &agrave; partir du contexte. Plus rapide, efficace sur grands corpus.</li>
+            <li><strong>Skip-gram</strong> pr&eacute;dit le contexte &agrave; partir d'un mot. Plus pr&eacute;cis sur petits corpus et mots rares.</li>
+          </ul>
           <p>
-            Tokenisation simple avec <code>gensim.utils.simple_preprocess</code>. Pense &agrave;
-            filtrer les lignes vides et &agrave; adapter la regex si le corpus contient des
-            caract&egrave;res sp&eacute;cifiques.
+            Je pars souvent sur Skip-gram (<code>sg=1</code>) avec une fen&ecirc;tre
+            modeste (5 &agrave; 8) pour capter les proximit&eacute;s locales.
           </p>
         </div>
       </section>
 
-      <section class="section" id="modele">
+      <section class="section" id="corpus">
         <div class="card article">
-          <h2>Page 3 · Mod&egrave;le</h2>
+          <h2>Traitement du corpus</h2>
           <p>
-            Param&egrave;tres de d&eacute;part : <code>vector_size=200</code>,
-            <code>window=5</code>, <code>min_count=3</code>, <code>sg=1</code> pour
-            Skip-gram, <code>epochs=12</code>. Ajuste selon la taille du corpus.
+            Objectif : un texte homog&egrave;ne et propre avant l'apprentissage.
           </p>
+          <ul>
+            <li>Minuscules, retrait de ponctuation inutile, suppression des doublons et lignes vides.</li>
+            <li><code>min_count</code> pour filtrer les mots trop rares.</li>
+            <li>Tokenisation simple : <code>gensim.utils.simple_preprocess</code> suffit dans beaucoup de cas.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="entrainement">
+        <div class="card article">
+          <h2>Entra&icirc;nement & hyperparam&egrave;tres</h2>
+          <p>Configuration de base :</p>
+          <ul>
+            <li><code>vector_size</code> : 100 &agrave; 300 (200 par d&eacute;faut ici).</li>
+            <li><code>window</code> : 5 pour du texte g&eacute;n&eacute;raliste.</li>
+            <li><code>min_count</code> : 3 pour filtrer le tr&egrave;s rare.</li>
+            <li><code>sg</code> : 1 (Skip-gram) ou 0 (CBOW).</li>
+            <li><code>epochs</code> : monte si le corpus est modeste.</li>
+          </ul>
           <p>
-            &Eacute;valuer rapidement avec quelques analogies ou similarit&eacute;s
-            connues, surveiller les OOV (mots absents du vocabulaire). Exporter
-            <code>.model</code> et <code>.vec</code> pour r&eacute;utilisation.
+            Surveille le temps d'entra&icirc;nement (nombre de threads via
+            <code>workers</code>) et la stabilit&eacute; du vocabulaire (pas trop de mots
+            &eacute;limin&eacute;s).
           </p>
+        </div>
+      </section>
+
+      <section class="section" id="evaluation">
+        <div class="card article">
+          <h2>Evaluation rapide</h2>
+          <ul>
+            <li><strong>Similarit&eacute;s</strong> : mots proches/&eacute;loign&eacute;s pour voir si les contextes sont coh&eacute;rents.</li>
+            <li><strong>Analogies</strong> : <code>roi - homme + femme ≈ reine</code> ou des exemples pertinents &agrave; ton domaine.</li>
+            <li><strong>OOV</strong> : mots hors vocabulaire. Ajuste <code>min_count</code> ou enrichis le corpus.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="usage">
+        <div class="card article">
+          <h2>Usage pratique</h2>
+          <ul>
+            <li>Recherche de similarit&eacute; : vecteurs moyens de documents, cosine.</li>
+            <li>Initialisation d'un moteur vectoriel (FAISS, etc.).</li>
+            <li>Features pour des mod&egrave;les classiques (clustering, classification).</li>
+          </ul>
         </div>
       </section>
 
       <section class="section" id="code">
         <div class="card">
-          <h2 style="margin: 0 0 8px 0">Exemple rapide (Python + Gensim)</h2>
+          <h2 style="margin: 0 0 8px 0">Bloc code (Python + Gensim)</h2>
 <pre><code>import re
 from pathlib import Path
 from gensim.models import Word2Vec
@@ -110,7 +162,7 @@ model = Word2Vec(
     window=5,
     min_count=3,
     workers=4,
-    sg=1,   # 1 = Skip-gram, 0 = CBOW
+    sg=1,   # Skip-gram (0 pour CBOW)
     epochs=12,
 )
 
@@ -120,36 +172,27 @@ model.save("word2vec.model")
 model.wv.save_word2vec_format("word2vec.vec")
 </code></pre>
           <p class="muted">
-            Adapte la regex &agrave; ta langue, ajuste <code>min_count</code> si le
-            corpus est petit. Tout ce bloc est pr&ecirc;t &agrave; remplacer par tes
-            propres notes.
+            Adapte la regex &agrave; ton alphabet, ajuste <code>min_count</code> si le
+            corpus est petit, et modifie <code>window</code> selon la granularit&eacute;
+            voulue.
           </p>
         </div>
       </section>
 
-      <section class="section">
-        <div class="grid">
-          <div class="card">
-            <h3>Ce qui reste &agrave; &eacute;crire</h3>
-            <ul class="list">
-              <li>D&eacute;tails sur l'&eacute;chantillonnage du corpus</li>
-              <li>Quelques graphiques (t-SNE/UMAP) pour visualiser</li>
-              <li>Comment je branche les vecteurs dans un moteur de recherche</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3>Raccourcis</h3>
-            <ul class="list">
-              <li><a href="projects.html">Retour projets</a></li>
-              <li><a href="index.html">Accueil</a></li>
-            </ul>
-          </div>
+      <section class="section" id="ressources">
+        <div class="card article">
+          <h2>Ressources</h2>
+          <ul>
+            <li>Doc Gensim : Word2Vec, KeyedVectors.</li>
+            <li>Corpora ouverts : Wikipedia dump, OSCAR, Common Crawl (filtr&eacute;s).</li>
+            <li>Moteurs vectoriels : FAISS, Milvus, ou un simple Annoy pour commencer.</li>
+          </ul>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Post Word2Vec · clair et sans surplus.</p>
+      <p>Word2Vec · sobre et clair.</p>
     </footer>
   </body>
 </html>
